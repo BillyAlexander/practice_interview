@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=db_solicitud;encrypt=true;trustServerCertificate=true
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: Hermione2022_wb
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+        
+testex:
+  api:
+    url:
+      colors: http://localhost:8082/colors
+      timeOutConnect: 5000
+      timeOutRead: 5000        

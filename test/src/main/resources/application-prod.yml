@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    driver-class-name: ${JDBC_DATABASE_DRIVER}
+    username: ${JDBC_DATABASE_USER}
+    password: ${JDBC_DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL_AUTO}
+    show-sql: ${HIBERNATE_SHOW_SQL}
+    properties:
+      hibernate:
+        dialect: ${HIBERNATE_SHOW_DIALECT}
+        
+testex:
+  api:
+    url:
+      colors: ${URL_SERV_COLORS}
+      timeOutConnect: 5000
+      timeOutRead: 5000        

@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    
+testex:
+  api:
+    url:
+      colors: http://localhost:8082/colors
+      timeOutConnect: 5000
+      timeOutRead: 5000    
