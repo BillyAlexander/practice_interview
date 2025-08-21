@@ -1,0 +1,36 @@
+<h2>{{ isEditMode ? 'Editar Solicitud' : 'Nueva Solicitud' }}</h2>
+
+<form  #solicitudForm="ngForm" (ngSubmit)="save()" novalidate>
+    <label>Nombre</label>
+    <input [(ngModel)]="solicitud.name" name="name" required pattern="^[a-zA-ZÀ-ÿ\s]+$" #nameInput="ngModel" />
+
+    <div *ngIf="nameInput.invalid && nameInput.touched" class="error">
+        <span *ngIf="nameInput.errors?.['required']">El nombre es obligatorio.</span>
+        <span *ngIf="nameInput.errors?.['pattern']">Solo se permiten letras y espacios.</span>
+    </div>
+
+    <label>Descripción</label>
+    <input [(ngModel)]="solicitud.description" name="description" required />
+
+    <label>Estado</label>
+    <select [(ngModel)]="solicitud.solStatus" name="solStatus" required>
+        <option *ngFor="let status of solStatusOptions" [value]="status">{{ status }}</option>
+    </select>
+
+
+    <button type="submit" [disabled]="solicitudForm.invalid">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
+</form>
+
+<!-- <input
+  type="text"
+  [(ngModel)]="solicitud.codigo"
+  name="codigo"
+  required
+  pattern="^[0-9]+$"
+  #codigoInput="ngModel"
+/>
+
+<div *ngIf="codigoInput.invalid && codigoInput.touched" class="error">
+  <span *ngIf="codigoInput.errors?.required">Este campo es obligatorio.</span>
+  <span *ngIf="codigoInput.errors?.pattern">Solo se permiten números.</span>
+</div> -->

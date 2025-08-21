@@ -1,0 +1,22 @@
+<h2>Lista de Facturas</h2>
+<button (click)="irANueva()">➕ Nueva Solicitud</button>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th><th>Nombre</th><th>Descripcion</th><th>Status</th><th>Fecha</th><th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let s of solicitudes">
+      <td>{{ s.solId }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ s.description }}</td>
+      <td>{{ s.solStatus }}</td>
+      <td>{{ s.creationDate | date: 'short' }}</td>
+      <td>
+        <button (click)="editarSolicitud(s.solId)">Editar</button>
+        <button (click)="deleteSolicitud(s.solId)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
