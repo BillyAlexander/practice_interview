@@ -95,3 +95,6 @@ mvn clean package -DskipTests
 ```
 docker network connect isspol-web_dev-net sqlserver-dev
 ```
+```
+docker-compose up --build
+```
