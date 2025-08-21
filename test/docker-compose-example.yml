@@ -1,0 +1,41 @@
+version: '3.8'
+
+name: documentos-web
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=documents
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+    restart: always
+    volumes:
+      - C:\volumesDocker\document-ws1:/var/lib/postgresql/data
+    networks:
+      - document-ws-red
+
+  app-web:
+    image: documents-web:v1
+    ports:
+      - "8080:8080"
+      - "3002:3000"
+    depends_on:
+      - db
+    environment:
+      - JDBC_DATABASE_URL=jdbc:postgresql://db:5432/documents
+      - JDBC_DATABASE_USER=postgres
+      - JDBC_DATABASE_PASSWORD=123456
+      - HIBERNATE_DDL_AUTO=update
+      - HIBERNATE_SHOW_SQL=true
+      - MAX_FILE_SIZE=2MB
+      - NEXT_PUBLIC_URL_BASE=http://app-backend:8080/usr-documents/api/v1
+      - URL_BASE=http://app-backend:8080/usr-documents/api/v1
+    networks:
+      - document-ws-red  
+
+networks:
+  document-ws-red:
+    driver: bridge      
