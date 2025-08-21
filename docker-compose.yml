@@ -1,0 +1,88 @@
+version: '3.8'
+
+name: isspol-web
+
+services:
+
+  # db:
+    # image: postgres
+    # ports:
+      # - "5433:5432"
+    # environment:
+      # - POSTGRES_DB=documents
+      # - POSTGRES_USER=postgres
+      # - POSTGRES_PASSWORD=123456
+    # restart: always
+    # volumes:
+      # - C:\volumesDocker\document-ws1:/var/lib/postgresql/data
+    # networks:
+      # - document-ws-red
+      
+
+  # sqlserver:
+    # image: mcr.microsoft.com/mssql/server:latest
+    # container_name: sqlserver-devtest
+    # ports:
+      # - "1433:1433"
+    # environment:
+      # ACCEPT_EULA: Y
+      # SA_PASSWORD: Hermione2022_wb
+    # networks:
+      # - dev-net
+    # volumes:
+      # - sqlserver_data:/var/opt/mssql
+
+
+  test-service:
+    build:
+      context: ./test/
+      dockerfile: Dockerfile
+    container_name: test-service
+    ports:
+      - "8080:8080"
+    environment:
+      JDBC_DATABASE_URL: jdbc:sqlserver://sqlserver-dev:1433;databaseName=db_solicitud;encrypt=true;trustServerCertificate=true
+      JDBC_DATABASE_DRIVER: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      JDBC_DATABASE_USER: sa
+      JDBC_DATABASE_PASSWORD: Hermione2022_wb
+      HIBERNATE_DDL_AUTO: update
+      HIBERNATE_SHOW_SQL: true
+      HIBERNATE_SHOW_DIALECT: org.hibernate.dialect.SQLServerDialect
+      URL_SERV_COLORS: http://color-service:8082/colors
+      
+    # depends_on:
+      # - sqlserver
+    networks:
+      - dev-net
+      
+  color-service:
+    build:
+      context: ./colors/
+      dockerfile: Dockerfile
+    container_name: color-service
+    ports:
+      - "8082:8082"
+
+    depends_on:
+      - test-service
+    networks:
+      - dev-net  
+
+  frontend:
+    build:
+      context: pathcompletodondeestaeldockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    networks:
+      - dev-net
+    depends_on:
+      - test-service
+    
+      
+volumes:
+  sqlserver_data:
+
+networks:
+  dev-net:
+    driver: bridge      
